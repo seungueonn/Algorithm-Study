@@ -1,27 +1,55 @@
-# 효주를 도와 가장 많은 양의 포도주를 마실 수 있도록
+# # 효주를 도와 가장 많은 양의 포도주를 마실 수 있도록
 
-n = int(input())
+# n = int(input())
+# arr=[]
+
+# for i in range(n):
+#     arr.append(int(input()))
+
+# # 3잔 연속해서 마실 수 없음
+# # i-2 /  i -1 / i
+# # 1 0 0
+# # 1 1 0
+# # 1 0 1
+# # 0 1 1
+# # 0 0 1
+# # 0 1 0
+
+# dp=[0]*10000
+
+# dp[0]=arr[0]
+# dp[1]=arr[0] + arr[1]
+# dp[2] = max(arr[2]+arr[0],arr[2]+arr[1],dp[1])
+
+# for i in range(3,n):
+#   dp[i] = max (dp[i-3]+arr[i-1]+arr[i], dp[i-2]+arr[i],dp[i-1])
+
+# print(max(dp))
+
+import sys
+input=sys.stdin.readline
+
+n=int(input().strip())
 arr=[]
-
 for i in range(n):
-    arr.append(int(input()))
+    arr.append((int(input().strip())))
 
-# 3잔 연속해서 마실 수 없음
-# i-2 /  i -1 / i
-# 1 0 0
-# 1 1 0
-# 1 0 1
-# 0 1 1
-# 0 0 1
-# 0 1 0
+dp=[0] * n
 
-dp=[0]*10000
+if n == 1:
+    print(arr[0])
+elif n == 2:
+    print(arr[0]+ arr[1])
+else:
+  dp[0] = arr[0]
+  dp[1] = arr[0] + arr[1]
+  dp[2] = max(arr[0]+arr[2],arr[1]+arr[2],dp[1])
 
-dp[0]=arr[0]
-dp[1]=arr[0] + arr[1]
-dp[2] = max(arr[2]+arr[0],arr[2]+arr[1],dp[1])
+  for i in range(3,n):
+      dp[i] = max(
+          dp[i-3]+arr[i]+arr[i-1], # ? x o o
+          dp[i-2]+arr[i],          # ? ? x o
+          dp[i-1]                  # ? ? ? x
+      )
 
-for i in range(3,n):
-  dp[i] = max (dp[i-3]+arr[i-1]+arr[i], dp[i-2]+arr[i],dp[i-1])
-
-print(max(dp))
+  print(dp[n-1])

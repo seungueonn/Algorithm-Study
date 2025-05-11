@@ -182,6 +182,4 @@ for i in range(n): # z
                 result = max(result ,arr[j]) # k넣기 
                 break
 
-
-print(arr2)
 print(result)

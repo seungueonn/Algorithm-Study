@@ -64,3 +64,11 @@ arr=[(0,9),(1,9),(2,7),(3,6),(4,5)]
 arr = sorted(arr,key = lambda x : (x[1],-x[0]))
 print(arr)
 
+
+exist=True
+print(1 if exist else 0, end=' ')
+
+from collections import defaultdict
+light=defaultdict(list)
+light[(0,0)].append((0,0))
+

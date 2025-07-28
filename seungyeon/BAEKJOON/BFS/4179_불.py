@@ -1,294 +1,372 @@
-# # # # # # 불을 퍼트리고 사람이 이동해야한다.
-# # # # # # 사람이 격자 밖으로 나갈 수 있는지 확인해야한다
-# # # # # # 불이 퍼진 정보를 저장하고 이를 기반으로 bfs로 이동
-# # # # # # 최단 거리 = bfs
+# # # # # # # 불을 퍼트리고 사람이 이동해야한다.
+# # # # # # # 사람이 격자 밖으로 나갈 수 있는지 확인해야한다
+# # # # # # # 불이 퍼진 정보를 저장하고 이를 기반으로 bfs로 이동
+# # # # # # # 최단 거리 = bfs
+
+
+# # # # # # import sys
+# # # # # # input=sys.stdin.readline
+# # # # # # from collections import deque
+
+# # # # # # dr = (-1, 1, 0, 0)
+# # # # # # dc = (0, 0, -1, 1)
+
+
+# # # # # # # 불이 퍼지는 과정
+# # # # # # def fire_bfs():
+# # # # # #     while fire_queue:
+# # # # # #         r,c = fire_queue.popleft()
+# # # # # #         for d in range(4):
+# # # # # #             nr = r + dr[d]
+# # # # # #             nc = c + dc[d]
+# # # # # #             if not (0 <= nr < R and 0 <= nc < C):
+# # # # # #                 continue
+# # # # # #             if arr[nr][nc] == "#" or fire[nr][nc]:
+# # # # # #                 continue
+# # # # # #             fire[nr][nc] = fire[r][c] + 1
+# # # # # #             fire_queue.append((nr,nc))
+
+# # # # # # def human_bfs():
+# # # # # #     while human_queue:
+# # # # # #         r,c = human_queue.popleft()
+# # # # # #         for d in range(4):
+# # # # # #             nr = r + dr[d]
+# # # # # #             nc = c + dc[d]
+
+# # # # # #             if not (0 <= nr < R and 0 <= nc < C):
+# # # # # #                 print(human[r][c])
+# # # # # #                 return
+# # # # # #             if human[nr][nc] or arr[nr][nc] == "#":
+# # # # # #                 continue
+# # # # # #             if fire[nr][nc] and human[r][c] + 1 >= fire[nr][nc]:
+# # # # # #                 continue
+# # # # # #             human[nr][nc] = human[r][c] + 1
+# # # # # #             human_queue.append((nr,nc))
+# # # # # #     print("IMPOSSIBLE")
+# # # # # #     return 
+
+# # # # # # R,C = map(int,input().split())
+# # # # # # arr = []
+# # # # # # fire_queue = deque()
+# # # # # # human_queue = deque()
+
+# # # # # # human = [[0]*C for _ in range(R)]
+# # # # # # fire = [[0]*C for _ in range(R)]
+# # # # # # for i in range(R):
+# # # # # #     arr.append(list(input().strip()))
+# # # # # #     for j in range(C):
+# # # # # #         if arr[i][j] == "J":
+# # # # # #             human_queue.append((i,j))
+# # # # # #             human[i][j] = 1
+# # # # # #         elif arr[i][j] == "F":
+# # # # # #             fire_queue.append((i,j))
+# # # # # #             fire[i][j] = 1
+
+# # # # # # fire_bfs()
+# # # # # # human_bfs()
 
 
 # # # # # import sys
-# # # # # input=sys.stdin.readline
 # # # # # from collections import deque
 
-# # # # # dr = (-1, 1, 0, 0)
-# # # # # dc = (0, 0, -1, 1)
+# # # # # input=sys.stdin.readline
 
+# # # # # r,c=map(int,input().split())
+# # # # # arr=[]
 
-# # # # # # 불이 퍼지는 과정
-# # # # # def fire_bfs():
-# # # # #     while fire_queue:
-# # # # #         r,c = fire_queue.popleft()
-# # # # #         for d in range(4):
-# # # # #             nr = r + dr[d]
-# # # # #             nc = c + dc[d]
-# # # # #             if not (0 <= nr < R and 0 <= nc < C):
-# # # # #                 continue
-# # # # #             if arr[nr][nc] == "#" or fire[nr][nc]:
-# # # # #                 continue
-# # # # #             fire[nr][nc] = fire[r][c] + 1
-# # # # #             fire_queue.append((nr,nc))
+# # # # # que_j = deque()
+# # # # # que_f = deque()
 
-# # # # # def human_bfs():
-# # # # #     while human_queue:
-# # # # #         r,c = human_queue.popleft()
-# # # # #         for d in range(4):
-# # # # #             nr = r + dr[d]
-# # # # #             nc = c + dc[d]
-
-# # # # #             if not (0 <= nr < R and 0 <= nc < C):
-# # # # #                 print(human[r][c])
-# # # # #                 return
-# # # # #             if human[nr][nc] or arr[nr][nc] == "#":
-# # # # #                 continue
-# # # # #             if fire[nr][nc] and human[r][c] + 1 >= fire[nr][nc]:
-# # # # #                 continue
-# # # # #             human[nr][nc] = human[r][c] + 1
-# # # # #             human_queue.append((nr,nc))
-# # # # #     print("IMPOSSIBLE")
-# # # # #     return 
-
-# # # # # R,C = map(int,input().split())
-# # # # # arr = []
-# # # # # fire_queue = deque()
-# # # # # human_queue = deque()
-
-# # # # # human = [[0]*C for _ in range(R)]
-# # # # # fire = [[0]*C for _ in range(R)]
-# # # # # for i in range(R):
-# # # # #     arr.append(list(input().strip()))
-# # # # #     for j in range(C):
-# # # # #         if arr[i][j] == "J":
-# # # # #             human_queue.append((i,j))
-# # # # #             human[i][j] = 1
-# # # # #         elif arr[i][j] == "F":
-# # # # #             fire_queue.append((i,j))
-# # # # #             fire[i][j] = 1
-
-# # # # # fire_bfs()
-# # # # # human_bfs()
-
-
-# # # # import sys
-# # # # from collections import deque
-
-# # # # input=sys.stdin.readline
-
-# # # # r,c=map(int,input().split())
-# # # # arr=[]
-
-# # # # que_j = deque()
-# # # # que_f = deque()
-
-# # # # visited_j=[[0] * c for _ in range(r)]
-# # # # visited_f=[[0] * c for _ in range(r)]
+# # # # # visited_j=[[0] * c for _ in range(r)]
+# # # # # visited_f=[[0] * c for _ in range(r)]
 
 
 
-# # # # dx=[-1,1,0,0]
-# # # # dy=[0,0,1,-1]
+# # # # # dx=[-1,1,0,0]
+# # # # # dy=[0,0,1,-1]
 
-# # # # for i in range(r):
-# # # #     tmp = list(input())
+# # # # # for i in range(r):
+# # # # #     tmp = list(input())
 
-# # # #     for j in range(len(tmp)):
-# # # #         if tmp[j] == "J":
-# # # #             que_j.append((i,j))
-# # # #             visited_j[i][j] = 1
-# # # #         elif tmp[j] == "F":
-# # # #             que_f.append((i,j))
-# # # #             visited_f[i][j] = 1
+# # # # #     for j in range(len(tmp)):
+# # # # #         if tmp[j] == "J":
+# # # # #             que_j.append((i,j))
+# # # # #             visited_j[i][j] = 1
+# # # # #         elif tmp[j] == "F":
+# # # # #             que_f.append((i,j))
+# # # # #             visited_f[i][j] = 1
 
-# # # #     arr.append(tmp)
+# # # # #     arr.append(tmp)
 
-# # # # def bfs():
+# # # # # def bfs():
     
-# # # #     while que_f:
-# # # #         x,y = que_f.popleft()
+# # # # #     while que_f:
+# # # # #         x,y = que_f.popleft()
 
-# # # #         for i in range(4):
-# # # #             nx=x+dx[i]
-# # # #             ny=y+dy[i]
+# # # # #         for i in range(4):
+# # # # #             nx=x+dx[i]
+# # # # #             ny=y+dy[i]
 
-# # # #             if 0 <= nx < r and 0 <= ny < c:
-# # # #                 if not visited_f[nx][ny] and arr[nx][ny] != "#":
-# # # #                     visited_f[nx][ny] = visited_f[x][y] + 1
-# # # #                     que_f.append((nx,ny))
+# # # # #             if 0 <= nx < r and 0 <= ny < c:
+# # # # #                 if not visited_f[nx][ny] and arr[nx][ny] != "#":
+# # # # #                     visited_f[nx][ny] = visited_f[x][y] + 1
+# # # # #                     que_f.append((nx,ny))
 
         
-# # # #     while que_j:
-# # # #         x,y=que_j.popleft()
+# # # # #     while que_j:
+# # # # #         x,y=que_j.popleft()
 
-# # # #         for i in range(4):
-# # # #             nx=x+dx[i]
-# # # #             ny=y+dy[i]
+# # # # #         for i in range(4):
+# # # # #             nx=x+dx[i]
+# # # # #             ny=y+dy[i]
 
-# # # #             if 0<=nx<r and 0 <= ny < c:
-# # # #                 if arr[nx][ny] != "#" and not visited_j[nx][ny]:
-# # # #                     if not visited_f[nx][ny] or visited_f[nx][ny] > visited_j[x][y] + 1:
-# # # #                         visited_j[nx][ny] = visited_j[x][y] + 1
-# # # #                         que_j.append((nx,ny))
+# # # # #             if 0<=nx<r and 0 <= ny < c:
+# # # # #                 if arr[nx][ny] != "#" and not visited_j[nx][ny]:
+# # # # #                     if not visited_f[nx][ny] or visited_f[nx][ny] > visited_j[x][y] + 1:
+# # # # #                         visited_j[nx][ny] = visited_j[x][y] + 1
+# # # # #                         que_j.append((nx,ny))
 
-# # # #             else:
-# # # #                 return visited_j[x][y]
+# # # # #             else:
+# # # # #                 return visited_j[x][y]
 
-# # # #     return "IMPOSSIBLE"
+# # # # #     return "IMPOSSIBLE"
 
-# # # # print(bfs())
-
-
-
-# # import sys
-# # from collections import deque
-# # input=sys.stdin.readline
-
-
-# # dx=[-1,1,0,0]
-# # dy=[0,0,1,-1]
+# # # # # print(bfs())
 
 
 
-# # # 큐에 다 넣어두고 시작해야함
+# # # import sys
+# # # from collections import deque
+# # # input=sys.stdin.readline
 
-# # def fire():
 
-# #     while que_fire:
-# #         x,y=que_fire.popleft()
+# # # dx=[-1,1,0,0]
+# # # dy=[0,0,1,-1]
 
-# #         for i in range(4):
-# #             nx=x+dx[i]
-# #             ny=y+dy[i]
 
-# #             if nx < 0 or ny < 0 or nx >= w or ny >=h:
-# #                 continue
 
-# #             # 불이 번짐
-# #             if arr[y][x] == '*' and arr[ny][nx] == '.':
-# #                 arr[ny][nx] = '*'
-# #                 que_fire.append((nx,ny))
+# # # # 큐에 다 넣어두고 시작해야함
 
-# #     print(arr)
+# # # def fire():
 
-# # def move():
+# # #     while que_fire:
+# # #         x,y=que_fire.popleft()
 
-# #     isgo=False        
-# #     while que_person:
-# #         x,y=que_person.popleft()
+# # #         for i in range(4):
+# # #             nx=x+dx[i]
+# # #             ny=y+dy[i]
 
-# #         for i in range(4):
-# #             nx=x+dx[i]
-# #             ny=y+dy[i]
+# # #             if nx < 0 or ny < 0 or nx >= w or ny >=h:
+# # #                 continue
 
-# #             # 탈출 조건
-# #             if (0<=nx<w) and (0<=ny<h):
-# #                 if visited[ny][nx] == 0 and arr[ny][nx] == '.':
-# #                     visited[ny][nx] = visited[y][x] + 1
-# #                     que_person.append((nx,ny))
-# #                     print((nx,ny))
-# #                     isgo=True
+# # #             # 불이 번짐
+# # #             if arr[y][x] == '*' and arr[ny][nx] == '.':
+# # #                 arr[ny][nx] = '*'
+# # #                 que_fire.append((nx,ny))
 
-# #             else:
-# #                 return visited[y][x]
-# #     if not isgo:
-# #         return 'IMPOSSIBLE'
+# # #     print(arr)
+
+# # # def move():
+
+# # #     isgo=False        
+# # #     while que_person:
+# # #         x,y=que_person.popleft()
+
+# # #         for i in range(4):
+# # #             nx=x+dx[i]
+# # #             ny=y+dy[i]
+
+# # #             # 탈출 조건
+# # #             if (0<=nx<w) and (0<=ny<h):
+# # #                 if visited[ny][nx] == 0 and arr[ny][nx] == '.':
+# # #                     visited[ny][nx] = visited[y][x] + 1
+# # #                     que_person.append((nx,ny))
+# # #                     print((nx,ny))
+# # #                     isgo=True
+
+# # #             else:
+# # #                 return visited[y][x]
+# # #     if not isgo:
+# # #         return 'IMPOSSIBLE'
           
 
-# # t=int(input())
-# # for _ in range(t):
+# # # t=int(input())
+# # # for _ in range(t):
 
-# #     que_fire=deque()
-# #     que_person=deque()
+# # #     que_fire=deque()
+# # #     que_person=deque()
 
-# #     w,h=map(int,input().split())
-# #     arr=[]
-# #     visited=[[0 for _ in range(w)] for _ in range(h)]
-# #     for _ in range(h):
-# #         arr.append((list(input().strip()))) # str을 한개씩 배열에 저장하는 방법
+# # #     w,h=map(int,input().split())
+# # #     arr=[]
+# # #     visited=[[0 for _ in range(w)] for _ in range(h)]
+# # #     for _ in range(h):
+# # #         arr.append((list(input().strip()))) # str을 한개씩 배열에 저장하는 방법
 
-# #     for i in range(h):
-# #         for j in range(w):
+# # #     for i in range(h):
+# # #         for j in range(w):
 
-# #         # @에서 bfs 시작
-# #             if arr[i][j] == '@':
-# #                 arr[i][j] = '.'
-# #                 visited[i][j] = 1
-# #                 que_person.append((j,i))
-# #             elif arr[i][j] == '*' :
-# #                 que_fire.append((j,i))
+# # #         # @에서 bfs 시작
+# # #             if arr[i][j] == '@':
+# # #                 arr[i][j] = '.'
+# # #                 visited[i][j] = 1
+# # #                 que_person.append((j,i))
+# # #             elif arr[i][j] == '*' :
+# # #                 que_fire.append((j,i))
 
-# #     result = 0
-# #     while True:
-# #         fire()
-# #         result = move()
-# #         if result: 
-# #             break
-# #     print(result)
+# # #     result = 0
+# # #     while True:
+# # #         fire()
+# # #         result = move()
+# # #         if result: 
+# # #             break
+# # #     print(result)
+
+# import sys
+# from collections import deque
+# input=sys.stdin.readline
+
+
+# Y,X=map(int,input().split())
+
+# visited_fire=[[0] * X for _ in range(Y)]
+# visited_human=[[0] * X for _ in range(Y)]
+
+# que_fire=deque()
+# que_human=deque()
+
+
+
+# arr=[]
+# for i in range(Y):
+#     input_str=list(map(str,input().strip()))
+#     arr.append(input_str)
+#     for j in range(X):
+#         if input_str[j] == 'F':
+#             que_fire.append((j,i))
+#             visited_fire[i][j] = 1
+#         elif input_str[j] =='J':
+#             que_human.append((j,i))
+#             visited_human[i][j] = 1
+
+            
+
+# dx=[-1,1,0,0]
+# dy=[0,0,1,-1]
+
+
+# def bfs():
+
+#     while que_fire:
+#         x,y=que_fire.popleft()
+
+
+#         for i in range(4):
+#             nx = x + dx[i]
+#             ny = y + dy[i]
+
+#             if nx < 0 or ny < 0 or nx >= X or ny >= Y:
+#                 continue
+
+#             if arr[ny][nx] != '#' and visited_fire[ny][nx] == 0:
+#                 visited_fire[ny][nx] = visited_fire[y][x] + 1
+#                 que_fire.append((nx,ny))
+
+    
+#     while que_human:
+#         x,y=que_human.popleft()
+
+#         for i in range(4):
+#             nx = x + dx[i]
+#             ny = y + dy[i]
+
+#             if nx < 0 or ny < 0 or nx >= X or ny >= Y:
+#                 return visited_human[y][x]
+            
+#             if arr[ny][nx] != '#' and visited_human[ny][nx] == 0:
+#                 if visited_fire[ny][nx] == 0 or visited_human[y][x] + 1 < visited_fire[ny][nx]:
+#                     visited_human[ny][nx] = visited_human[y][x] + 1
+#                     que_human.append((nx,ny))
+
+
+#     return "IMPOSSIBLE"
+
+
+# print(bfs())
+
+
+#매 분마다 한칸씩 이동한다.
 
 import sys
-from collections import deque
 input=sys.stdin.readline
+from collections import deque
 
+r,c=map(int,input().split())
 
-Y,X=map(int,input().split())
-
-visited_fire=[[0] * X for _ in range(Y)]
-visited_human=[[0] * X for _ in range(Y)]
-
-que_fire=deque()
-que_human=deque()
-
+fire_que=deque()
+human_que=deque()
 
 
 arr=[]
-for i in range(Y):
-    input_str=list(map(str,input().strip()))
-    arr.append(input_str)
-    for j in range(X):
-        if input_str[j] == 'F':
-            que_fire.append((j,i))
-            visited_fire[i][j] = 1
-        elif input_str[j] =='J':
-            que_human.append((j,i))
-            visited_human[i][j] = 1
+visited=[[0] * c for _ in range(r)]
+human_visited=[[0] * c for _ in range(r)]
 
-            
+for i in range(r):
+    input_arr=list(map(str,input().strip()))
+    arr.append(input_arr)
+
+    for j in range(c):
+        if input_arr[j] == 'F':
+            fire_que.append((i,j))
+            visited[i][j] = 1
+        if input_arr[j] == 'J':
+            human_que.append((i,j))
+            human_visited[i][j] = 1
+
 
 dx=[-1,1,0,0]
 dy=[0,0,1,-1]
 
 
-def bfs():
 
-    while que_fire:
-        x,y=que_fire.popleft()
+def fire_bfs():
 
-
+    while fire_que:
+        x,y=fire_que.popleft()
+        
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
 
-            if nx < 0 or ny < 0 or nx >= X or ny >= Y:
+            if nx < 0 or ny < 0 or nx >= r or ny >= c:
                 continue
 
-            if arr[ny][nx] != '#' and visited_fire[ny][nx] == 0:
-                visited_fire[ny][nx] = visited_fire[y][x] + 1
-                que_fire.append((nx,ny))
+            if arr[nx][ny] != '#' and visited[nx][ny] == 0 :
+                visited[nx][ny] = visited[x][y] + 1
+                fire_que.append((nx,ny))
 
-    
-    while que_human:
-        x,y=que_human.popleft()
+
+def human_bfs():
+
+    while human_que:
+        x,y=human_que.popleft()
 
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
 
-            if nx < 0 or ny < 0 or nx >= X or ny >= Y:
-                return visited_human[y][x]
+            if nx < 0 or ny < 0 or nx >= r or ny >= c:
+                print(human_visited[x][y])
+                return 
             
-            if arr[ny][nx] != '#' and visited_human[ny][nx] == 0:
-                if visited_fire[ny][nx] == 0 or visited_human[y][x] + 1 < visited_fire[ny][nx]:
-                    visited_human[ny][nx] = visited_human[y][x] + 1
-                    que_human.append((nx,ny))
+            if arr[nx][ny] == '.' and  human_visited[nx][ny] == 0:
+                if visited[nx][ny] == 0 or visited[nx][ny] > human_visited[x][y] + 1:
+                    human_que.append((nx,ny))
+                    human_visited[nx][ny] = human_visited[x][y] + 1
 
 
-    return "IMPOSSIBLE"
+    print("IMPOSSIBLE")
 
 
-print(bfs())
+
+fire_bfs()
+human_bfs()
